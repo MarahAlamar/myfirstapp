@@ -15,16 +15,18 @@ function CardComp(props)
     }
     return(
         <>
-<Card style={{ width: '18rem' }}>
+        
+<Card style={{ width: '18rem' , margin: '10px' }}>
       <Card.Img variant="top" src={props.image_url} />
       <Card.Body>
         <Card.Title>{props.title}</Card.Title>
-       
-   
         <Button variant="primary" onClick={handleShow}>Show description </Button>
       </Card.Body>
     </Card>
-     <Modal show={show} onHide={handleShow}>
+
+ 
+
+     <Modal show={show} onHide={handleShow}  dialogClassName="modal-left">
      <Modal.Header closeButton>
        <Modal.Title>{props.title}</Modal.Title>
      </Modal.Header>

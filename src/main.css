@@ -1,6 +1,6 @@
 #contantmain {
 display:flex ;
- flexWrap: wrap ;
+ flexWrap: flexWrap ;
   justifyContent: space-between ;
    gap: 20px ;
    marginTop:3% ;
@@ -18,3 +18,10 @@ display:flex ;
    font-weight: bold;
    font-size: 1.2em;
 }
+
+.modal-left  {
+ 
+   left:auto;
+   right: 400px;
+
+ }
