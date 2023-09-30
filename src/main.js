@@ -9,7 +9,7 @@ import  { useState } from 'react';
 
 function Main(){
     let [items ,setItems] = useState(data);
-    //let [noResults, setNoResults] = useState(false);
+  let [noResults, setNoResults] = useState(false);
 
 
     function handleSubmit (event){
@@ -17,14 +17,12 @@ function Main(){
         event.preventDefault()
         let searchedValue = event.target.search.value.toLowerCase();
         let filteredItems= data.filter(item => item.title.toLowerCase().includes(searchedValue));
+
+        setNoResults(filteredItems.length === 0); // Check if there are no results
+
   setItems(filteredItems);
 
- if (filteredItems.length === 0) {
-     setNoResults(true);
-  } else {
-    setNoResults(false);
-    setItems(filteredItems);
-  }
+
 
     }
     return (
@@ -42,21 +40,25 @@ function Main(){
           </Form>
 
 <div id='contantmain'>
-
+ {noResults ? (
+          <p id='noSearch'> No search results found.</p>
+        ) : (
         
-{items.map(function(item){
-    return( 
+items.map(item => (
 
 
 <CardComp image_url={item.image_url} title={item.title} description={item.description} />
 
 )
-}
+
 )
-}
+)}
+
 </div>
 </>
     )
+
 }
+
 
 export default Main;

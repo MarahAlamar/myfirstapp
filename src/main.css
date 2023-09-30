@@ -12,3 +12,9 @@ display:flex ;
     margin-right: 20%;
     margin-bottom: 4%;
 }
+
+#noSearch{
+   color: red; /* Change the color to suit your design */
+   font-weight: bold;
+   font-size: 1.2em;
+}
