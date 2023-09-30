@@ -1,0 +1,14 @@
+#contantmain {
+display:flex ;
+ flexWrap: wrap ;
+  justifyContent: space-between ;
+   gap: 20px ;
+   marginTop:3% ;
+}
+
+#FormSearch{
+    margin-top: 2%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 4%;
+}

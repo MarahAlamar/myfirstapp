@@ -1,26 +1,55 @@
 
+import data from './data.json';
+import CardComp from './card';
+import './main.css';
+import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import data from './data.json'
-
+import  { useState } from 'react';
 
 
 function Main(){
+    let [items ,setItems] = useState(data);
+    //let [noResults, setNoResults] = useState(false);
+
+
+    function handleSubmit (event){
+
+        event.preventDefault()
+        let searchedValue = event.target.search.value.toLowerCase();
+        let filteredItems= data.filter(item => item.title.toLowerCase().includes(searchedValue));
+  setItems(filteredItems);
+
+ if (filteredItems.length === 0) {
+     setNoResults(true);
+  } else {
+    setNoResults(false);
+    setItems(filteredItems);
+  }
+
+    }
     return (
+        
 <>
-<div style={{ display:"flex" , flexWrap:"wrap" , justifyContent:"space-between" , gap:"20px" , marginTop:"3%"}}>
-{data.map(function(item){
-    return(
-<Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={item.image_url} />
-      <Card.Body>
-        <Card.Title>{item.title}</Card.Title>
-        <Card.Text>
-        {item.description}
-        </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
-      </Card.Body>
-    </Card>
+<Form className="d-flex"  onSubmit={handleSubmit} id='FormSearch'>
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+              name='search'
+            />
+            <Button variant="outline-success" type='submit'>Search</Button>
+          </Form>
+
+<div id='contantmain'>
+
+        
+{items.map(function(item){
+    return( 
+
+
+<CardComp image_url={item.image_url} title={item.title} description={item.description} />
+
 )
 }
 )
