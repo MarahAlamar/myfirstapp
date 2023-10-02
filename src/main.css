@@ -1,9 +1,9 @@
 #contantmain {
 display:flex ;
- flexWrap: flexWrap ;
-  justifyContent: space-between ;
+ flex-wrap: flexWrap ;
+  justify-content: space-between ;
    gap: 20px ;
-   marginTop:3% ;
+   margin-top:3% ;
 }
 
 #FormSearch{
@@ -17,7 +17,9 @@ display:flex ;
    color: red; /* Change the color to suit your design */
    font-weight: bold;
    font-size: 1.2em;
+   margin-left: 550px;
 }
+
 
 .modal-left  {
  
