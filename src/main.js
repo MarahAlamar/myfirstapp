@@ -9,44 +9,57 @@ import  { useEffect, useState } from 'react';
 
 function Main(){
     let [items ,setItems] = useState([]);
-  let [noResults, setNoResults] = useState(false);
+ let [noResults, setNoResults] = useState(false);
+ let [meals ,setMeals] = useState([]);
 
-  async function getData(){
-    const url = 'https://edamam-food-and-grocery-database.p.rapidapi.com/api/food-database/v2/parser?nutrition-type=cooking&category%5B0%5D=generic-foods&health%5B0%5D=alcohol-free';
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '742519d97bmshd80493e0ca26ff0p19db2bjsn946902b754ad',
-            'X-RapidAPI-Host': 'edamam-food-and-grocery-database.p.rapidapi.com'
-        }
-    };
+
+//   async function getData(){
+//     const url = 'https://edamam-food-and-grocery-database.p.rapidapi.com/api/food-database/v2/parser?nutrition-type=cooking&category%5B0%5D=generic-foods&health%5B0%5D=alcohol-free';
+//     const options = {
+//         method: 'GET',
+//         headers: {
+//             'X-RapidAPI-Key': '742519d97bmshd80493e0ca26ff0p19db2bjsn946902b754ad',
+//             'X-RapidAPI-Host': 'edamam-food-and-grocery-database.p.rapidapi.com'
+//         }
+//     };
     
-    try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-        setItems(result.hints);
-    } catch (error) {
-        console.error(error);
-    }
+//     try {
+//         const response = await fetch(url, options);
+//         const result = await response.json();
+//         console.log(result.hints)
+//         setItems(result.hints);
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
+
+
+ async function getMealsData(){
+    let response= await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+ let data =  await response.json();
+setMeals(data.meals);
+
+
 }
+  useEffect(function()//{getData} 
+  {getMealsData()},[])
 
-  useEffect(function(){getData()},[])
+//     function handleSubmit (event){
 
-    function handleSubmit (event){
+//         event.preventDefault()
+//         let searchedValue = event.target.search.value.toLowerCase();
+//       //  let filteredItems= data.filter(item => item.title.toLowerCase().includes(searchedValue));
 
-        event.preventDefault()
-        let searchedValue = event.target.search.value.toLowerCase();
-      //  let filteredItems= data.filter(item => item.title.toLowerCase().includes(searchedValue));
+//       //  setNoResults(filteredItems.length === 0); // Check if there are no results
 
-      //  setNoResults(filteredItems.length === 0); // Check if there are no results
-
-  //setItems(filteredItems);
+//   //setItems(filteredItems);
 
 
 
-    }
+  //  }
+    
     return (
-      //onSubmit={handleSubmit}
+      
   
 <>
 <Form className="d-flex"  id='FormSearch'>
@@ -65,10 +78,10 @@ function Main(){
           <p id='noSearch'> No search results found</p>
         ) : (
         
-items.map(item => (
+meals.map(item => (
 
 
-<CardComp image_url={item.image_url} title={item.title} description={item.description} />
+<CardComp image_url={item.strMealThumb} title={item.strMeal} description={item.strInstructions} category={item.strCategory} />
 
 )
 
