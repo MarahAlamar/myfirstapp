@@ -8,8 +8,8 @@ import  { useEffect, useState } from 'react';
 
 
 function Main(){
-    let [items ,setItems] = useState([]);
- let [noResults, setNoResults] = useState(false);
+ let [items ,setItems] = useState([]);
+//let [noResults, setNoResults] = useState(false);
  let [meals ,setMeals] = useState([]);
 
 
@@ -34,35 +34,41 @@ function Main(){
 // }
 
 
- async function getMealsData(){
-    let response= await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
- let data =  await response.json();
-setMeals(data.meals);
+async function getMealsData(){
+let response= await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+ let result =  await response.json();
+setMeals(result.meals)
 
 
 }
   useEffect(function()//{getData} 
-  {getMealsData()},[])
+  {getMealsData()},[]);
 
-//     function handleSubmit (event){
+ async function handleSubmit (event){
 
-//         event.preventDefault()
-//         let searchedValue = event.target.search.value.toLowerCase();
-//       //  let filteredItems= data.filter(item => item.title.toLowerCase().includes(searchedValue));
+     event.preventDefault();
+  let searchedValue = event.target.search.value.toLowerCase();
 
-//       //  setNoResults(filteredItems.length === 0); // Check if there are no results
+  let response= await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s='+searchedValue);
+  let result =  await response.json();
 
-//   //setItems(filteredItems);
+  if (result.meals) {
 
+    let filteredMeals = result.meals.filter(function (item) {
+    return item.strMeal.toLowerCase().includes(searchedValue.toLowerCase());
+    });
+    setMeals(filteredMeals);
+  } else {
+    setMeals([]);
+  }
+}
 
-
-  //  }
     
     return (
       
   
 <>
-<Form className="d-flex"  id='FormSearch'>
+<Form className="d-flex"  id='FormSearch' onSubmit={handleSubmit}>
             <Form.Control
               type="search"
               placeholder="Search"
@@ -74,19 +80,14 @@ setMeals(data.meals);
           </Form>
 
 <div id='contantmain'>
- {noResults ? (
-          <p id='noSearch'> No search results found</p>
-        ) : (
-        
-meals.map(item => (
-
-
+{meals && meals.length !== 0 ? meals.map(function(item){
+          return(
+            <>
 <CardComp image_url={item.strMealThumb} title={item.strMeal} description={item.strInstructions} category={item.strCategory} />
-
-)
-
-)
-)}
+               </>
+      )
+  }
+  ) : <h3>No search results</h3>}
 
 </div>
 </>
